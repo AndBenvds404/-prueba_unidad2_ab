@@ -1,4 +1,4 @@
-package com.uce.edu.demo.hospital.modelo;
+	package com.uce.edu.demo.hospital.modelo;
 
 import java.time.LocalDateTime;
 import java.util.List;

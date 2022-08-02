@@ -1,5 +1,8 @@
 package com.uce.edu.demo.hospital.repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -8,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.demo.hospital.modelo.Paciente;
+import com.uce.edu.demo.hospital.modelo.PacienteTo;
 
 @Repository
 @Transactional
@@ -43,9 +47,18 @@ public class PacienteRepositoryImpl implements IPacienteRepository{
 	@Override
 	public Paciente buscarPorCedula(String cedula) {
 		// TODO Auto-generated method stub
-		TypedQuery<Paciente> myQuery = this.entityManager.createQuery("SELECT p FROM paciente p WHERE p.cedula =: datoCedula", Paciente.class);
+		TypedQuery<Paciente> myQuery = this.entityManager.createQuery("SELECT p FROM Paciente p WHERE p.cedula =: datoCedula", Paciente.class);
 		myQuery.setParameter("datoCedula", cedula);
 		return myQuery.getSingleResult();
+	}
+
+	@Override
+	public List<PacienteTo>  buscarPaciente(LocalDateTime fechaNacimiento, String genero) {
+		// TODO Auto-generated method stub
+		TypedQuery<PacienteTo> myQuery = this.entityManager.createQuery("SELECT NEW com.uce.edu.demo.hospital.modelo.PacienteTo(p.cedula, p.nombre,p.fechaNacimiento, p.genero) from Paciente p WHERE p.fechaNacimiento > :datoFechaNacimiento AND p.genero =:datoGenero",PacienteTo.class);
+		myQuery.setParameter("datoFechaNacimiento", fechaNacimiento);
+		myQuery.setParameter("datoGenero", genero);
+		return myQuery.getResultList();
 	}
 	
 	

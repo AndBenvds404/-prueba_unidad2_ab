@@ -2,6 +2,7 @@ package com.uce.edu.demo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.uce.edu.demo.hospital.modelo.Doctor;
 import com.uce.edu.demo.hospital.modelo.Paciente;
+import com.uce.edu.demo.hospital.modelo.PacienteTo;
 import com.uce.edu.demo.hospital.service.IDoctorService;
 import com.uce.edu.demo.hospital.service.IGestorCitaMedicaService;
 import com.uce.edu.demo.hospital.service.IPacienteService;
@@ -41,7 +43,7 @@ public class PruebaPaU2P2AbApplication  implements CommandLineRunner {
 		//ingreso 2 pacientes
 		Paciente p = new Paciente();
 		p.setApellido("Benavides");
-		p.setCedula("172700000");
+		p.setCedula("1727000007");
 		p.setCodigoSeguro("1234567890");
 		p.setEstatura(1.70);
 		p.setFechaNacimiento(LocalDateTime.of(1999, 02, 01, 23, 24));
@@ -59,14 +61,14 @@ public class PruebaPaU2P2AbApplication  implements CommandLineRunner {
 		p2.setNombre("Lupe");
 		p2.setPeso(50.0);
 		
-		this.iPacienteService.insertar(p);
-		this.iPacienteService.insertar(p2);
+//		this.iPacienteService.insertar(p);
+//		this.iPacienteService.insertar(p2);
 		
 		//ingreso 2 doctores
 		
 		Doctor d = new Doctor();
 		d.setApellido("Nuñes");
-		d.setCedula("127273731");
+		d.setCedula("1272737317");
 		d.setFechaNacimiento(LocalDateTime.of(1992, 2, 12, 4, 12));
 		d.setGenero("masculino");
 		d.setNombre("Ramon");
@@ -79,15 +81,20 @@ public class PruebaPaU2P2AbApplication  implements CommandLineRunner {
 		d2.setGenero("femenino");
 		d2.setNombre("Silvia");
 		d2.setNumeroConsultorio("A2");
-		this.iDoctorService.insertar(d);
-		this.iDoctorService.insertar(d2);
+//		this.iDoctorService.insertar(d);
+//		this.iDoctorService.insertar(d2);
 
 		//agendar una cita medica
-		this.iGestorCitaMedicaService.AgendamientoCitaMedica("c1", LocalDateTime.now(), new BigDecimal(20), "centro de salud Calderon", "127273731", "172700000");
+		this.iGestorCitaMedicaService.AgendamientoCitaMedica("c4", LocalDateTime.now(), new BigDecimal(20), "centro de salud Calderon", "1272737317", "1727000007");
 		//actualizatr la cita medica
-		this.iGestorCitaMedicaService.citaMedicaFinal("123", "Covid", "Hibuprofeno", LocalDateTime.of(2022, 10, 15, 9, 0));
+		this.iGestorCitaMedicaService.actualizarCitaMedica ("c4", "Covid", "Hibuprofeno", LocalDateTime.of(2022, 10, 15, 9, 0));
 		//reporte paciente
-	
+		List<PacienteTo> listaPacientes = this.iGestorCitaMedicaService.reportePaciente(LocalDateTime.of(1990, 10, 24, 1, 30), "masculino");
+		for(PacienteTo paciente : listaPacientes) {
+			LOG.info("Paciente genero, fecha: "+paciente);
+			
+		}
+		
 	}
 
 }

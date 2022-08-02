@@ -2,11 +2,13 @@ package com.uce.edu.demo.hospital.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uce.edu.demo.hospital.modelo.CitaMedica;
+import com.uce.edu.demo.hospital.modelo.PacienteTo;
 @Service
 public class GestorCitaMedicaServiceImpl implements IGestorCitaMedicaService{
 	
@@ -28,7 +30,7 @@ public class GestorCitaMedicaServiceImpl implements IGestorCitaMedicaService{
 			cm.setFechaCita(fechaCita);
 			cm.setValorCita(valorCita);
 			cm.setLugarCita(lugarCita);
-			cm.setDoctor(this.iDoctorService.buscarPorCedula(cedulaPaciente));
+			cm.setDoctor(this.iDoctorService.buscarPorCedula(cedulaDoctor));
 			cm.setPaciente(this.iPacienteService.buscarPorCedula(cedulaPaciente));
 			
 			this.iCitaMedicaService.insertar(cm);
@@ -36,7 +38,7 @@ public class GestorCitaMedicaServiceImpl implements IGestorCitaMedicaService{
 	}
 
 	@Override
-	public void citaMedicaFinal(String numeroCita, String diagnostico, String receta, LocalDateTime fechaProximaCita) {
+	public void actualizarCitaMedica(String numeroCita, String diagnostico, String receta, LocalDateTime fechaProximaCita) {
 		// TODO Auto-generated method stub
 		CitaMedica cm = this.iCitaMedicaService.buscarPorNumeroCita(numeroCita);
 		cm.setDiagnostico(diagnostico);
@@ -46,8 +48,9 @@ public class GestorCitaMedicaServiceImpl implements IGestorCitaMedicaService{
 	}
 
 	@Override
-	public void reportePaciente(LocalDateTime fecha, String genero) {
+	public List<PacienteTo> reportePaciente(LocalDateTime fecha, String genero) {
 		// TODO Auto-generated method stub
+		return this.iPacienteService.buscarPaciente(fecha, genero);
 		
 	}
 

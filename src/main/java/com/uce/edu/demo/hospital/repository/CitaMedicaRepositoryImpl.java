@@ -44,7 +44,7 @@ public class CitaMedicaRepositoryImpl  implements ICitaMedicaRepository{
 	@Override
 	public  CitaMedica buscarPorNumeroCita(String numeroCita) {
 		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager.createQuery("SELECT c FROM cita_medica c WHERE c.numeroCita =:datoNumeroCita");
+		Query myQuery = this.entityManager.createQuery("SELECT c FROM CitaMedica c WHERE c.numeroCita =:datoNumeroCita");
 		myQuery.setParameter("datoNumeroCita", numeroCita);
 		return (CitaMedica) myQuery.getSingleResult();
 	}
